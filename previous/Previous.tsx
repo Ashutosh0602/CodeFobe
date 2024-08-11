@@ -9,13 +9,15 @@ import {
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import fetchUserData from "../api/Data";
+import List from "../stack/List";
 
 const Previous = () => {
   const route = useRoute();
   const { updatedParam }: any = route.params || {};
   const [userData, setUserData]: any = React.useState();
   React.useEffect(() => {
-    fetchUserData(updatedParam).then((data) => setUserData(data[0]));
+    fetchUserData(updatedParam).then((data) => List(data));
+    // setUserData(List)
   }, [updatedParam]);
 
   return userData ? (
