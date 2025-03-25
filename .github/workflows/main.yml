@@ -17,7 +17,7 @@ on:
 
 jobs:
   test:
-    runs-on: [self-hosted, repo-2]
+    runs-on: [self-hosted, repo-2-runner]
     steps:
       - name: Print
         run: echo "hello"
