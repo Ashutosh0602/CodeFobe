@@ -1,0 +1,23 @@
+name: Parallel Execution Example
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+    inputs:
+      runRspec:
+        description: 'Run RSpec tests'
+        required: false
+        type: boolean
+      runContainerScan:
+        description: 'Run Container Scan'
+        required: false
+        type: boolean
+
+jobs:
+  test:
+    runs-on: [self-hosted, repo-2]
+    steps:
+      - name: Print
+        run: echo "hello"
