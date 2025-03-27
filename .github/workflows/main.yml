@@ -1,23 +1,19 @@
-name: Parallel Execution Example
-
 on:
-  push:
-    branches:
-      - "**"
   workflow_dispatch:
-    inputs:
-      runRspec:
-        description: 'Run RSpec tests'
-        required: false
-        type: boolean
-      runContainerScan:
-        description: 'Run Container Scan'
-        required: false
-        type: boolean
 
 jobs:
-  test:
-    runs-on: [self-hosted, repo-2-runner]
+  get_caller_identity:
+    name: Get Caller Identity
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - name: Print
-        run: echo "hello"
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHub_Actions_Role
+          aws-region: us-west-2
+      - name: Fetch the caller identity
+        run: |
+          aws sts get-caller-identity
